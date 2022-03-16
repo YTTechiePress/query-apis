@@ -13,6 +13,44 @@
 // If this file is access directly, abort!!!
 defined( 'ABSPATH' ) or die( 'Unauthorized Access' );
 
+function get_send_data() {
+     * Make query of our posts
+    $args array(
+        "post_type' → 'post',
+        "posts_per_page' → 10,
+    );
+          %D
+    $query = new WP_Query($args);
+    $datasend - [);
+    if( $query>have_posts() ) {
+        while( $query→have_posts() ) {
+            $query→the_post();
+            $array = [
+                 'title' → get_the_title(),
+                 "body' = get_the_content(),
+                    
+                 userID' = 1
+            ];
+            array_push( $datasend, $array );
+        }
+	
+    $data_to_pus_to_api json_encode( $datasend ); 
+    
+    $url = 'https://jsonplaceholder.typicode.com/posts'
+	$arguments = array(
+	    'method' 'POST',
+	    *body' = $data_to_pus_to_api,
+	);
+	$response - wp_remote_post( $url, $arguments );
+	if K is_wp_erſror( $response ) [) {
+	    $error_message = $response→get_error_message();
+	    echo "Something went wrong: $error_message";
+	  } else {
+	    echo 'Response:<pre>';
+	    print_r( $response );
+	    echo '</pre>';
+}
+
 function techiepress_get_send_data() {
 
     $url = 'https://jsonplaceholder.typicode.com/users';
